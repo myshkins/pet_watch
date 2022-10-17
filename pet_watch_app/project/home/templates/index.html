@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block pagestyles %}
+{% assets "home_style_bundle" %}
+<link href="{{ ASSET_URL }}" rel="stylesheet" type="text/css" />
+{% endassets %}
+{% endblock %}
+
+{% block content %}
+<div class="big-container">
+    {% include "navigation.html" %}
+    <div class="sm-container">
+        <div class="form">
+            <form method="POST" action="/">
+                {{ form.csrf_token }}
+                {{ form.name.label }} {{ form.name(size=20) }}
+                {{ form.email.label }} {{ form.email(size=20) }}
+                {{ form.password.label }} {{ form.password(size=20) }}
+                <input type="submit" value="Go">
+            </form>
+        </div>
+        <div class="somethin">
+            {# <div class='btn-graph' data-location="{{ url_for('home_bp.say_hi') }}" id='btn-hi'>say hi</div> #}
+        </div>
+    </div>
+</div>
+{% endblock %}
