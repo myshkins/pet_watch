@@ -10,9 +10,9 @@ class Config(object):
     FLASK_DEBUG = os.environ.get("FLASK_DEBUG")
 
     # Database               
-    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:password@db:5432/dbname"
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:password@db:5432/chanchtemps"
     SQLALCHEMY_ECHO = False      #if 'True', logs all database activity to Python's stderr for debugging.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTGRES_USER = "postgres"
     POSTGRES_PASSWORD = "password"
-    POSTGRES_DB = "dbname"
+    POSTGRES_DB = "chanchtemps"

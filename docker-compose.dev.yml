@@ -1,15 +1,30 @@
 version: '3.8'
 
 services:
-  web:
+  api:
+    container_name: pet_watch_api
     build:
-      context: .
+      context: api/
+    ports:
+      - 8100:5100
+    volumes:
+      - ./:/app
+    env_file:
+      - ./api/.env.dev
+    depends_on:
+      db:
+        condition: service_healthy
+
+  app:
+    container_name: pet_watch_app
+    build:
+      context: pet_watch_app/
     ports:
       - 8000:5000
     volumes:
       - ./:/app
     env_file:
-      - ./.env.dev
+      - ./pet_watch_app/.env.dev
     depends_on:
       db:
         condition: service_healthy

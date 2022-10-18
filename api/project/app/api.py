@@ -10,10 +10,9 @@ from project.models import db, Temps
 api_bp = Blueprint('api_bp', __name__)
 
 
-@api_bp.route('/say_hi', endpoint='say_hi', methods=['GET'])
+@api_bp.route('/hi', endpoint='say_hi', methods=['GET'])
 def say_hi():
-    #sense.show_message("hi chanchy!")
-    return make_response() 
+    return jsonify("hellow")
 
 
 @api_bp.route('/make_temp_point', endpoint='make_temp_point', methods=['POST'])

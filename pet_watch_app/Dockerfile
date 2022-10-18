@@ -2,7 +2,7 @@
 
 FROM python:3.10.8-slim-buster
 
-WORKDIR /app
+WORKDIR /pet_watch_app
 
 RUN pip install --upgrade pip
 COPY requirements.txt requirements.txt
