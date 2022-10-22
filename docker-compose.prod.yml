@@ -1,15 +1,30 @@
 version: '3.8'
 
 services:
-  web:
-    build:
-      context: .
+  api:
+    container_name: pet_watch_api
+    build: ./api
+    command: gunicorn --bind 0.0.0.0:5000 wsgi:app
     ports:
       - 8000:5000
     volumes:
-      - ./:/app
+      - ./api:/api
     env_file:
-      - ./.env.dev
+      - ./api/.env.docker.dev
+    depends_on:
+      db:
+        condition: service_healthy
+
+  app:
+    container_name: pet_watch_app
+    build: ./pet_watch_app
+    command: gunicorn --bind 0.0.0.0:5000 wsgi:app
+    ports:
+      - 8100:5000
+    volumes:
+      - ./pet_watch_app:/app
+    env_file:
+      - ./pet_watch_app/.env.docker.dev
     depends_on:
       db:
         condition: service_healthy
