@@ -3,8 +3,8 @@ from flask_assets import Environment, Bundle
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
-db = SQLAlchemy()
 
+db = SQLAlchemy()
 
 
 def init_app():
@@ -20,7 +20,6 @@ def init_app():
         from .home import home
         from .about import about
 
-        db.create_all()
         app.register_blueprint(home.home_bp)
         app.register_blueprint(about.about_bp)
         compile_assets(assets)

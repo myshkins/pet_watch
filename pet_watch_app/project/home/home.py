@@ -8,7 +8,9 @@ from matplotlib.figure import Figure
 import matplotlib.dates as mdates
 import time
 from datetime import datetime as dt
+from datetime import timedelta
 import numpy as np
+from project.models import db, Temps
 
 
 
@@ -19,29 +21,30 @@ home_bp = Blueprint(
 
 
 def get_all():
-    data = requests.get('http://192.168.86.23:8000/get_all').text
-    return data
+    query = Temps.query.all()
+    times, temps = [], []
+    for point in query:
+        times.append(str(point.time))
+        temps.append([point.temperature])
+    return (times, temps)
 
 def get_day():
-    data = requests.get('http://192.168.86.23:8000/get_day').text
-    return data
+    now = dt.now()
+    query = Temps.query.filter((now - Temps.time) < timedelta(days=1)).all()
+    times, temps = [], []
+    for point in query:
+        times.append(str(point.time))
+        temps.append([point.temperature])
+    return (times, temps)
 
-def make_arrays(temp_data):
-    data = temp_data
-    temp_dict = json.loads(data)
-    temp_items = temp_dict.items()
-    date_list = [item[0] for item in temp_items]
-    temp_list = [item[1] for item in temp_items]
-    date_arr = np.array(date_list, dtype='datetime64')
-    temp_arr = np.array(temp_list)
+def make_arrays(data):
+    date_arr = np.array(data[0], dtype='datetime64')
+    temp_arr = np.array(data[1])
     return (date_arr, temp_arr)
 
 def get_current_temp():
-    temp_h = float(requests.get('http://192.168.86.23:8000/temp_h').text)
-    temp_p = float(requests.get('http://192.168.86.23:8000/temp_p').text)
-    curr_temp = (temp_h + temp_p) / 2
-    temp_in_F = (curr_temp * (9/5)) + 32
-    return temp_in_F - 6
+    temp = Temps.query.first().temperature
+    return temp
 
 
 @home_bp.route('/', endpoint='home', methods=['GET'])
@@ -60,7 +63,7 @@ def home():
     for label in ax.get_xticklabels():
             label.set_rotation(40)
             label.set_horizontalalignment('right')
-    ax.set_ylim(10, 35)
+    ax.set_ylim(40, 100)
     ax.set_xlim(dates[0], dates[len(dates)-1])
     buf = BytesIO()
     fig.savefig(buf, format="png", bbox_inches='tight', pad_inches=.2)
