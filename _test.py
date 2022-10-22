@@ -5,7 +5,7 @@ import requests
 import base64
 from werkzeug.security import generate_password_hash, check_password_hash
 
-temp = 73.4
+temp = 71.4
 now = str(dt.now())
 data_dict = {'temperature': temp, 'time': now}
 j = json.dumps(data_dict, indent=4, default=str)

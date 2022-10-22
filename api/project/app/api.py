@@ -33,7 +33,7 @@ def make_temp_point():
         time = dt.strptime(data['time'], '%Y-%m-%d %H:%M:%S.%f')
         data = Temps.query.all()    #clear temperature rows older than needed time window
         for row in data:
-            if (now - row.time) > timedelta(days=8):
+            if (time - row.time) > timedelta(days=8):
                 db.session.delete(row)
                 db.session.commit()
         new_t_point = Temps(temperature=temp, time=time)
