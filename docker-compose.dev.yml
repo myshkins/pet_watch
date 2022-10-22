@@ -9,7 +9,7 @@ services:
     volumes:
       - ./api:/api
     env_file:
-      - ./api/.env.dev
+      - ./api/.env.docker.dev
     depends_on:
       db:
         condition: service_healthy
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./pet_watch_app:/app
     env_file:
-      - ./pet_watch_app/.env.dev
+      - ./pet_watch_app/.env.docker.dev
     depends_on:
       db:
         condition: service_healthy

@@ -4,16 +4,10 @@ from sense_hat import SenseHat
 import json
 import time
 import requests
-import logging
 import os
 
 
 sense = SenseHat()
-
-
-logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
-
-# logging.basicConfig(filename='chanch_db_builder.log', encoding='utf-8', level=logging.WARNING, format='%(asctime)s %(message)s')
 
 
 def get_temp_h():
@@ -26,21 +20,24 @@ def get_temp_p():
 
 def make_temp_point():
     temp_h = sense.get_temperature_from_humidity()
+    temp_h = (temp_h * (9/5)) + 32
     temp_p = sense.get_temperature_from_pressure()
-    temp_mean = (temp_h + temp_p) / 2
-    time = dt.now()
-    #make post requester here
-    response = requests.post(url)
-    #sc = response.status_code
-    #if sc != 200:
-    #logging.warning('something went wrong, response code %d' %sc)
-    return
+    temp_p = (temp_p * (9/5)) + 32
+    temp = round(((temp_h + temp_p) / 2), 1)
+    now = dt.now()
+    data_dict = {'temperature': temp, 'time': now}
+    j = json.dumps(data_dict, indent=4, default=str)
+    response = requests.post(
+        'https://www.pet-watch.ak0.io/post',
+        json=j,
+        auth=('myshkins', 'password'))
+
 
 
 starttime = time.time()
 
 while True:
     make_temp_point()
-    time.sleep(60.0 - ((time.time() - starttime) % 60.0))
+    time.sleep(600.0 - ((time.time() - starttime) % 600.0))
 
 

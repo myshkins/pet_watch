@@ -14,9 +14,28 @@ body {
 body,html {
     margin: 0;
     padding: 0;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Share Tech Mono, Arial, Helvetica;
 }
 
 h1 {
+    text-align: center;
+}
+
+
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    /* background-color: rgb(228, 251, 255); */
+    font-size: 2rem;
+    margin-bottom: 4rem;
+}
+
+.btn-nav {
+    margin: 1rem;
+    background-color: transparent;
+    min-width: 7rem;
+    border-radius: 5px;
+    padding: 5px 8px;
+    color: rgb(75, 75, 75);
     text-align: center;
 }

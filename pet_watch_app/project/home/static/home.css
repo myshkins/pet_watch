@@ -1,22 +1,55 @@
-:root {
-    --bg-color: rgb(255, 255, 255);
+.big-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
 }
 
-html {
-    font-size: 10px;
+.temp-now {
+    display: flex;
+    justify-content: center;
+    font-family: 'LCD14ItalicCondensed';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 4rem;
+    color: rgb(75, 75, 75);
+    margin-bottom: 2rem;
 }
 
-body {
-    min-height: 100vh;
-    background-color: var(--bg-color);
+.graph {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: fit-content;
 }
 
-body,html {
-    margin: 0;
-    padding: 0;
-    font-family: Helvetica, Arial, sans-serif;
+#temp-graph{
+    border-radius: 5px;
+    border-color: rgb(106, 160, 146);
+    border-style: solid;
+    border-width: 2px;
 }
 
-h1 {
+.graph-btn-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 1rem;
+    font-size: 2rem;
+    margin-bottom: 6rem;
+}
+
+.btn-graph {
+    margin: 1rem;
+    background-color: rgb(174, 255, 235);
+    min-width: 7rem;
+    border-radius: 5px;
+    padding: 5px 8px;
+    color: rgb(75, 75, 75);
     text-align: center;
+    filter: drop-shadow(1px 1px 1px rgb(106, 160, 146));
+}
+
+
+.btn-graph:hover {
+    filter: brightness(85%) drop-shadow(1px 1px 1px rgb(5, 115, 158));
 }
