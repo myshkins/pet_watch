@@ -2,8 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
-db = SQLAlchemy()
 
+db = SQLAlchemy()
 
 
 def init_app():
@@ -14,7 +14,11 @@ def init_app():
     
     with app.app_context():
         from project.app import api
+        import commands
 
-        db.create_all()
+        # db.create_all()
         app.register_blueprint(api.api_bp)
+        app.register_blueprint(commands.db_bp)
+
         return app
+

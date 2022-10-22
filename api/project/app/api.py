@@ -9,13 +9,8 @@ import base64
 
 
 
-## Blueprint Config
 api_bp = Blueprint('api_bp', __name__)
 
-
-# @api_bp.route('/hi', endpoint='say_hi', methods=['GET'])
-# def say_hi():
-#     return jsonify("hellow")
 
 
 @api_bp.route('/post', endpoint='post', methods=['POST'])
