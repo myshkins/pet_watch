@@ -10,5 +10,6 @@ db_bp = Blueprint('db_bp', __name__)
 def create_db():
     '''create database tables'''
     db.create_all()
+    db.session.commit()
     click.echo("Create all tables")
 

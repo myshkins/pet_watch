@@ -1,6 +1,7 @@
-from project import init_app
+from project import create_app
 
-app = init_app()
+
+app = create_app()
 
 
 if __name__ == "__main__":
