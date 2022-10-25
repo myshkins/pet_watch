@@ -21,9 +21,10 @@ FROM python:3.10.8-slim-buster
 RUN mkdir -p /home/api
 RUN addgroup --system api && adduser --system --group api
 
-ENV HOME=/home/api
 ENV API_HOME=/home/api/project
-RUN mkdir $API_HOME
+RUN mkdir -p $API_HOME
+
+WORKDIR $API_HOME
 
 COPY --from=builder /api/wheels /wheels
 COPY --from=builder /api/requirements.txt .
