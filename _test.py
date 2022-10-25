@@ -8,8 +8,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 temp = 72.4
 now = str(dt.now())
 data_dict = {'temperature': temp, 'time': now}
-j = json.dumps(data_dict, indent=4, default=str)
-response = requests.post('http://0.0.0.0:8000/post', json=j, auth=('myshkins', 'iw4GD^5EZfH*SDTr%wtpm$Ni8'))
+j = json.dumps(data_dict, default=str)
+print(j)
+response = requests.post('http://www.pet-watch.ak0.io/post', json=j, auth=('myshkins', 'iw4GD^5EZfH*SDTr%wtpm$Ni8'))
 print(response)
 print(response.text)
 
