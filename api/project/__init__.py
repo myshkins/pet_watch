@@ -17,7 +17,6 @@ def create_app():
 
     with app.app_context():
         from project.app import api
-        # import commands
 
         @click.command('create_db')
         def create_db():
@@ -25,7 +24,6 @@ def create_app():
 
         app.cli.add_command(create_db)
         app.register_blueprint(api.api_bp)
-        # app.register_blueprint(commands.db_bp)
 
         return app
 

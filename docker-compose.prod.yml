@@ -3,7 +3,9 @@ version: '3.8'
 services:
   api:
     container_name: pet_watch_api
-    build: ./api
+    build: 
+      context: ./api
+      dockerfile: Dockerfile.prod
     command: gunicorn --bind 0.0.0.0:5000 wsgi:app
     ports:
       - 8000:5000
@@ -15,7 +17,9 @@ services:
 
   app:
     container_name: pet_watch_app
-    build: ./pet_watch_app
+    build: 
+      context: ./pet_watch_app
+      dockerfile: Dockerfile.prod
     command: gunicorn --bind 0.0.0.0:5000 wsgi:app
     ports:
       - 8100:5000

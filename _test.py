@@ -5,13 +5,13 @@ import requests
 import base64
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# temp = 72.4
-# now = str(dt.now())
-# data_dict = {'temperature': temp, 'time': now}
-# j = json.dumps(data_dict, indent=4, default=str)
-# response = requests.post('http://0.0.0.0:8000/post', json=j, auth=('myshkins', 'iw4GD^5EZfH*SDTr%wtpm$Ni8'))
-# print(response)
-# print(response.text)
+temp = 72.4
+now = str(dt.now())
+data_dict = {'temperature': temp, 'time': now}
+j = json.dumps(data_dict, indent=4, default=str)
+response = requests.post('http://0.0.0.0:8000/post', json=j, auth=('myshkins', 'iw4GD^5EZfH*SDTr%wtpm$Ni8'))
+print(response)
+print(response.text)
 
 # now = str(dt.now())
 # t = dt.strptime(now, '%Y-%m-%d %H:%M:%S.%f')

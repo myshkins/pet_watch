@@ -1,0 +1,37 @@
+# syntax=docker/dockerfile:1
+
+### BUILDER ###
+
+FROM python:3.10.8-slim-buster as builder
+
+WORKDIR /api
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update && apt-get install -y --no-install-recommends gcc
+RUN pip install --upgrade pip
+COPY requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /api/wheels -r requirements.txt
+
+
+### FINAL ###
+FROM python:3.10.8-slim-buster
+
+RUN mkdir -p /home/api
+RUN addgroup --system api && adduser --system --group api
+
+ENV HOME=/home/api
+ENV API_HOME=/home/api/project
+RUN mkdir $API_HOME
+
+COPY --from=builder /api/wheels /wheels
+COPY --from=builder /api/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache /wheels/*
+
+COPY . $API_HOME
+
+RUN chown -R api:api $API_HOME
+
+USER api
