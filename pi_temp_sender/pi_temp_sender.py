@@ -1,21 +1,23 @@
 from datetime import datetime as dt
 from datetime import timedelta
-from sense_hat import SenseHat
+# from sense_hat import SenseHat
 import json
 import time
 import requests
 import os
 import random
 
-sense = SenseHat()
+# sense = SenseHat()
 
 
 def get_temp_h():
-    temp_h = sense.get_temperature_from_humidity()
+    temp_h = random.uniform(15.1, 16.1)
+    # temp_h = sense.get_temperature_from_humidity()
     return temp_h
 
 def get_temp_p():
-    temp_p = sense.get_temperature_from_pressure()
+    temp_p = random.uniform(15.1, 16.1)
+    # temp_p = sense.get_temperature_from_pressure()
     return temp_p
 
 def make_temp_point():
@@ -28,9 +30,10 @@ def make_temp_point():
     data_dict = {'temperature': temp, 'time': now}
     j = json.dumps(data_dict, indent=4, default=str)
     response = requests.post(
-        'http://www.pet-watch.ak0.io/post',
+        'https://www.pet-watch.ak0.io/post',
         json=j,
-        auth=('myshkins', 'password'))
+        auth=('myshkins', 'iw4GD^5EZfH*SDTr%wtpm$Ni8'))
+    print(response)
     print(response.text)
 
 
