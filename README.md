@@ -8,7 +8,7 @@ The inspiration for this project came from Chancho the chinchilla. He's a 15 yea
 The tech stack for the app is Flask, Postgres, SQLAlchemy, Gunicorn, and Nginx. The frontend is served up with basic html and CSS. Matplotlib is used to render the temperature graph.  The temperature data comes from a Raspberry Pi 4b with an attached SenseHat temperature sensor that sits in my apartment.  
 
 ##### Data
-I wrote a systemd service file to run the `pi_temp_sender.py` script on the Raspberry pi. That script runs continuously, sending a temperature data point to the Postgres database which is hosted on my VPS. 
+I wrote a systemd service file to run the `pi_temp_sender.py` script on the Raspberry pi. That litle program runs continuously, sending a temperature data point to the Postgres database which is hosted on my VPS. 
 
 ##### Backend
 I've used Docker to deploy this app on my VPS. There are three components to the backend: a Postgres Database, a Flask API, and the Flask app. Each of these sits inside it's own Docker container, and they are all networked together. The Flask app uses the factory pattern and blueprints. Though blueprints may be overkill for such a simple app, I do plan on adding more functionality in the future, so hopefully this structure will pay off. 
