@@ -16,6 +16,9 @@ I've used Docker to deploy this app on my VPS. There are three components to the
 ## Future Plans
 There are a number of features I would like to add to this project. 
 
+##### Improve Data Visualization
+Right now, the temperature graph on the homepage is generated using Matplotlib. This works decently enough, but I'd like to upgrade this visualization to something nicer looking. 
+
 ##### Time Windows
 As of right now, the temperature data is only available in a 24 hour view. My next step is to build functionality for different time windows to allow views of 3 hours, 3 days, 1 week, etc.
 
