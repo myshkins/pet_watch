@@ -63,7 +63,7 @@ def home():
     for label in ax.get_xticklabels():
             label.set_rotation(40)
             label.set_horizontalalignment('right')
-    ax.set_ylim(40, 100)
+    ax.set_ylim(50, 85)
     ax.set_xlim(dates[0], dates[len(dates)-1])
     buf = BytesIO()
     fig.savefig(buf, format="png", bbox_inches='tight', pad_inches=.2)
