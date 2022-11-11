@@ -4,7 +4,7 @@ from datetime import datetime as dt
 from datetime import timedelta
 from project.models import db, Temps
 import json
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 import base64
 
 
@@ -28,7 +28,7 @@ def make_temp_point():
         time = dt.strptime(data['time'], '%Y-%m-%d %H:%M:%S.%f')
         data = Temps.query.all()    #clear temperature rows older than needed time window
         for row in data:
-            if (time - row.time) > timedelta(days=8):
+            if (time - row.time) > timedelta(days=7):
                 db.session.delete(row)
                 db.session.commit()
         new_t_point = Temps(temperature=temp, time=time)

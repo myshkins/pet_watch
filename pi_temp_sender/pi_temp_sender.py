@@ -1,23 +1,24 @@
 from datetime import datetime as dt
 from datetime import timedelta
-# from sense_hat import SenseHat
+from sense_hat import SenseHat
 import json
 import time
 import requests
 import os
 import random
+# import logging
 
-# sense = SenseHat()
+sense = SenseHat()
 
-
+# logging.basicConfig(filename='pi_temp_sender.log', )
 def get_temp_h():
     temp_h = random.uniform(15.1, 16.1)
-    # temp_h = sense.get_temperature_from_humidity()
+    temp_h = sense.get_temperature_from_humidity()
     return temp_h
 
 def get_temp_p():
     temp_p = random.uniform(15.1, 16.1)
-    # temp_p = sense.get_temperature_from_pressure()
+    temp_p = sense.get_temperature_from_pressure()
     return temp_p
 
 def make_temp_point():
@@ -32,9 +33,7 @@ def make_temp_point():
     response = requests.post(
         'https://www.pet-watch.ak0.io/post',
         json=j,
-        auth=('myshkins', 'iw4GD^5EZfH*SDTr%wtpm$Ni8'))
-    print(response)
-    print(response.text)
+        auth=('myshkins', 'password'))
 
 
 
