@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from flask import current_app as app
+# from flask import current_app as app
 
 about_bp = Blueprint(
     'about_bp', __name__,
@@ -8,7 +8,4 @@ about_bp = Blueprint(
 
 @about_bp.route('/about', endpoint='about', methods=['GET'])
 def about():
-    return render_template('index.html')
-
-
-
+    return render_template('about.html')

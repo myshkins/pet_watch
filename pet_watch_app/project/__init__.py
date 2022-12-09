@@ -3,14 +3,12 @@ from flask_assets import Environment
 from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
-
 db = SQLAlchemy()
 
 
-def init_app():
-    app = Flask(__name__, instance_relative_config=False)
+def create_app():
+    app = Flask(__name__)
     app.config.from_object(Config)
-    
     db.init_app(app)
     assets = Environment(app)
     assets.init_app(app)

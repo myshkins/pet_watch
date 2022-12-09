@@ -1,7 +1,8 @@
+"""database table models"""
 from project import db
 
-class Temps(db.Model):
-    """Data model for user accounts."""
+class Temp(db.Model):
+    """Data model for temperature data point."""
 
     __tablename__ = 'temperature'
     id = db.Column(
@@ -15,10 +16,10 @@ class Temps(db.Model):
     )
     time = db.Column(
         db.DateTime,
-        index=False,
-        unique=False,
+        index=True,
+        unique=True,
         nullable=False
     )
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return f'temp:{self.temperature}, time:{self.time}'

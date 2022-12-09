@@ -1,8 +1,10 @@
+"""flask compile assets function"""
 from flask import current_app as app
 from flask_assets import Bundle
 
 
 def compile_assets(assets):
+    """flask compile assets function"""
     assets.auto_build = True
     assets.debug = False
     main_style_bundle = Bundle(
@@ -11,6 +13,7 @@ def compile_assets(assets):
         output='dist/css/style.css',
         extra={"rel": "stylesheet/css"}
     )
+
     main_js_bundle = Bundle(
         'src/js/*.js',
         filters='jsmin',
@@ -18,7 +21,7 @@ def compile_assets(assets):
     )
 
     home_style_bundle = Bundle(
-        'src/css/*.css',
+        './static/src/css/*.css',
         'home_bp/home.css',
         filters='cssmin',
         output='dist/css/home.css',

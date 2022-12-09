@@ -1,37 +1,47 @@
-from flask import jsonify, Blueprint, make_response, request, abort
-from flask import current_app as app
+"""api routes"""
 from datetime import datetime as dt
 from datetime import timedelta
-from project.models import db, Temps
 import json
+
+from flask import make_response, request
+from flask import current_app as app
+from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import check_password_hash
-import base64
 
 
-
-api_bp = Blueprint('api_bp', __name__)
-
+from models import db, Temp
 
 
-@api_bp.route('/post', endpoint='post', methods=['POST'])
+auth = HTTPBasicAuth()
+
+@auth.verify_password
+def verify_password(username, password):
+    with open('auth.txt', mode='r') as file:
+        users = json.load(file)
+        if username in users and check_password_hash(users.get(username), password):
+            return username
+
+def trim_data():
+    """removes old, unneccesary data"""
+    cutoff = dt.now() - timedelta(seconds=50)
+    old_data = db.session.execute(
+        db.select(Temp).where(Temp.time <= cutoff)
+        ).scalars()
+    for row in old_data:
+        db.session.delete(row)
+    db.session.commit()
+
+
+@app.route('/post', endpoint='post', methods=['POST'])
+@auth.login_required
 def make_temp_point():
-    auth_cyph = request.headers['Authorization'][6:]
-    decyph = base64.b64decode(auth_cyph).decode("utf-8").split(":")
-    with open('auth.txt') as file:
-        pw_hash = file.read()
-    if decyph[0] != 'myshkins' or not check_password_hash(pw_hash, decyph[1]):
-        abort(401)
-    else:
-        j = request.get_json()
-        data = json.loads(j)
-        temp = data['temperature']
-        time = dt.strptime(data['time'], '%Y-%m-%d %H:%M:%S.%f')
-        data = Temps.query.all()    #clear temperature rows older than needed time window
-        for row in data:
-            if (time - row.time) > timedelta(days=7):
-                db.session.delete(row)
-                db.session.commit()
-        new_t_point = Temps(temperature=temp, time=time)
-        db.session.add(new_t_point)
-        db.session.commit()
-        return make_response()
+    """api post function for receiving and storing temperature data"""
+    string_data = request.get_json()
+    json_data = json.loads(string_data)
+    temp = round(float(json_data['temperature']), 1)
+    time = dt.strptime(json_data['time'], '%Y-%m-%d %H:%M:%S.%f')
+    temp_point = Temp(temperature=temp, time=time)
+    trim_data()
+    db.session.add(temp_point)
+    db.session.commit()
+    return json_data

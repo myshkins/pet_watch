@@ -15,17 +15,14 @@
     {% include "navigation.html" %}
         <div class="graph">
             <div class="temp-now">
-                <span>TEMP NOW: {{temp_now}}<span>
+                <span>TEMP NOW: {{ curr_temp }}<span>
             </div>
-            <img id="temp-graph" src='data:image/png;base64,{{data}}'>    
+            <img id="temp-graph" src='data:image/png;base64,{{ data_plot }}'>    
             <div class="graph-btn-bar">
                 <div class="btn-graph" id="three-hr">3hr</div>
                 <div class="btn-graph" id="one-day">24hr</div>
                 <div class="btn-graph" id="one-wk">Week</div>
-                <div class='btn-graph' data-location="{{ url_for('home_bp.say_hi') }}" id='btn-hi'>say hi</div>
-                {# <div class='btn-graph' ="{{ url_for('home_bp.say_hi') }}" id='btn-hi'>say hi</div> #}
             </div>
         </div>
     </div>
 {% endblock %}
-

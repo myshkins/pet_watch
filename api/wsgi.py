@@ -1,3 +1,4 @@
+"""app entrypoint"""
 from project import create_app
 
 

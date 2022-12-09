@@ -3,28 +3,32 @@ version: '3.8'
 services:
   api:
     container_name: pet_watch_api
-    build: ./api
-    command: python -m wsgi 0.0.0.0:8000
+    build:
+      context: ./
+      dockerfile: ./api/Dockerfile.api.dev
+    command: bash -c "cp models.py api && python api/wsgi.py"
     ports:
-      - 8000:5000
+      - 8100:5000
     volumes:
-      - ./api:/api
+      - ./:/api
     env_file:
-      - ./api/.env.docker.dev
+      - ./api/.env.dev
     depends_on:
       db:
         condition: service_healthy
 
   app:
     container_name: pet_watch_app
-    build: ./pet_watch_app
-    command: python -m wsgi 0.0.0.0:8100
+    build:
+      context: ./
+      dockerfile: ./pet_watch_app/Dockerfile.app.dev
+    command: bash -c "cp models.py pet_watch_app && python pet_watch_app/wsgi.py"
     ports:
-      - 8100:5000
+      - 8000:5000
     volumes:
-      - ./pet_watch_app:/app
+      - ./:/app
     env_file:
-      - ./pet_watch_app/.env.docker.dev
+      - ./pet_watch_app/.env.dev
     depends_on:
       db:
         condition: service_healthy
@@ -34,6 +38,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=chanchtemps
+      - TZ=America/New_York
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data

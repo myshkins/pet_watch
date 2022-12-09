@@ -1,0 +1,141 @@
+pet-watch
+└── pet_watch_app
+    ├── env
+    ├── project
+    │   └── __init__.py
+    ├── requirements.txt
+    └── wsgi.py
+
+
+
+pet-watch
+├── docker-compose.dev.yml
+└── pet_watch_app
+    ├── .env.dev
+    ├── config.py
+    ├── Dockerfile
+    ├── env
+    ├── project
+    │   ├── about
+    │   │   ├── about.py
+    │   │   ├── static
+    │   │   └── templates
+    │   │       └── about.html
+    │   ├── home
+    │   │   ├── home.py
+    │   │   ├── static
+    │   │   └── templates
+    │   │       └── index.html
+    │   ├── __init__.py
+    │   ├── models.py
+    │   ├── static
+    │   │   ├── dist
+    │   │   └── src
+    │   └── templates
+    ├── requirements.txt
+    └── wsgi.py
+
+
+.
+├── api
+│   ├── auth.txt
+│   ├── config.py
+│   ├── Dockerfile
+│   ├── Dockerfile.prod
+│   ├── env
+│   ├── project
+│   │   ├── app
+│   │   │   └── api.py
+│   │   ├── __init__.py
+│   │   └── models.py
+│   ├── requirements.txt
+│   └── wsgi.py
+├── docker-compose.dev.yml
+├── docker-compose.prod.yml
+├── LICENSE.txt
+├── pet_watch_app
+│   ├── .env.dev
+│   ├── .env.prod
+│   ├── config.py
+│   ├── Dockerfile
+│   ├── Dockerfile.prod
+│   ├── env
+│   ├── project
+│   │   ├── about
+│   │   │   ├── about.py
+│   │   │   ├── static
+│   │   │   │   ├── about.css
+│   │   │   │   └── about.js
+│   │   │   └── templates
+│   │   │       └── about.html
+│   │   ├── assets.py
+│   │   ├── home
+│   │   │   ├── home.py
+│   │   │   ├── static
+│   │   │   │   ├── home.css
+│   │   │   │   └── home.js
+│   │   │   └── templates
+│   │   │       └── index.html
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── static
+│   │   │   ├── dist
+│   │   │   │   ├── css
+│   │   │   │   │   ├── about.css
+│   │   │   │   │   ├── home.css
+│   │   │   │   │   └── style.css
+│   │   │   │   └── js
+│   │   │   │       ├── about.min.js
+│   │   │   │       ├── home.min.js
+│   │   │   │       └── main.min.js
+│   │   │   ├── img
+│   │   │   └── src
+│   │   │       ├── css
+│   │   │       │   └── styles.css
+│   │   │       └── js
+│   │   │           └── main.js
+│   │   └── templates
+│   │       ├── layout.html
+│   │       └── navigation.html
+│   ├── requirements.txt
+│   └── wsgi.py
+├── pi_temp_sender
+│   ├── pi_temp_sender.py
+│   └── requirements.txt
+└── README.md
+
+version: '3.8'
+
+services:
+  app:
+    container_name: pet_watch_app
+      build: ./pet_watch_app
+      command: python wsgi.py
+      volumes:
+        - ./pet_watch_app:/app
+      ports:
+        - 5000:5000
+      env_file:
+        - ./pet_watch_app/.env.docker.dev
+      depends_on:
+        db:
+          condition: service_healthy
+
+  db:
+    image: postgres:14.5-alpine
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=chanchtemps
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

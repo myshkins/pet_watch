@@ -1,0 +1,11 @@
+# syntax=docker/dockerfile:1
+
+FROM python:3.10.8-slim-buster
+
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+COPY pet_watch_app/requirements.txt .
+RUN pip3 install -r requirements.txt
