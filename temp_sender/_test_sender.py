@@ -13,10 +13,10 @@ def send_temp_point():
     j = json.dumps(data_dict, indent=4, default=str)
     response = requests.post(
         'http://0.0.0.0:8100/post',
-        json=j, auth=('user', 'password'), timeout=.1)
+        json=j, auth=('user', 'password'), timeout=1)
     print(response.text)
 
 starttime = time.time()
 while True:
     send_temp_point()
-    time.sleep(1.0 - ((time.time() - starttime) % 1.0))
+    time.sleep(5.0 - ((time.time() - starttime) % 1.0))

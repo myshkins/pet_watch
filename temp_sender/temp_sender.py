@@ -2,9 +2,13 @@
 from datetime import datetime as dt
 import json
 import time
+import logging
 
 from sense_hat import SenseHat
 import requests
+
+logging.basicConfig(filename='chanch.log', filemode='w', level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 sense = SenseHat()
 
@@ -37,6 +41,8 @@ def send_temp_point():
         'https://www.pet-watch.ak0.io/post',
         json=j,
         auth=('user', 'password'), timeout=1.0)
+    msg = response.text
+    logging.debug(msg)
 
 starttime = time.time()
 while True:
