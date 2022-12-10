@@ -7,7 +7,7 @@ import logging
 from sense_hat import SenseHat
 import requests
 
-logging.basicConfig(filename='chanch.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(filename='temp_sender.log', filemode='w', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 sense = SenseHat()

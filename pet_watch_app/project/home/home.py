@@ -13,8 +13,8 @@ import numpy as np
 from models import db, Temp
 
 
-logging.basicConfig(filename='pet_watch_app.log', filemode='w', level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+# logging.basicConfig(filename='pet_watch_app.log', filemode='w', level=logging.INFO)
+# logger = logging.getLogger(__name__)
 
 home_bp = Blueprint(
     'home_bp', __name__,
@@ -49,7 +49,6 @@ def make_arrays(data):
 @home_bp.route('/', endpoint='home', methods=['GET'])
 def home():
     curr_temp = get_current_temp()
-    logging.debug(curr_temp)
     times, temps = make_arrays(get_day())
     fig = Figure()
     ax = fig.subplots()

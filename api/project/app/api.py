@@ -23,7 +23,7 @@ def verify_password(username, password):
 
 def trim_data():
     """removes old, unneccesary data"""
-    cutoff = dt.now() - timedelta(seconds=50)
+    cutoff = dt.now() - timedelta(days=5)
     old_data = db.session.execute(
         db.select(Temp).where(Temp.time <= cutoff)
         ).scalars()
